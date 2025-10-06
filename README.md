@@ -10,7 +10,7 @@
 
 ## Estructura recomendada
 ```
-proyecto/
+PP_TLP/
 ├─ analizador.py
 ├─ snake/
 │  └─ snake.brik
@@ -34,13 +34,13 @@ proyecto/
 ### Snake
 **Windows (PowerShell)**
 ```powershell
-cd proyecto
+cd PP_TLP
 py .\analizador.py .\snake\snake.brik --pretty
 ```
 
 **macOS / Linux**
 ```bash
-cd proyecto
+cd PP_TLP
 python3 analizador.py ./snake/snake.brik --pretty
 ```
 
@@ -50,13 +50,13 @@ python3 analizador.py ./snake/snake.brik --pretty
 ### Tetris
 **Windows (PowerShell)**
 ```powershell
-cd proyecto
+cd PP_TLP
 py .\analizador.py .\tetris\tetris.brik --pretty
 ```
 
 **macOS / Linux**
 ```bash
-cd proyecto
+cd PP_TLP
 python3 analizador.py ./tetris/tetris.brik --pretty
 ```
 
