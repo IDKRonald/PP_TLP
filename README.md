@@ -1,5 +1,12 @@
 # Proyecto — DSL `.brik` + Analizador (Lexer/Parser)
 
+---
+## Integrantes:
+- Maria José Laverde Mahecha
+- José David Melo Contreras
+- Ronald Sneyder Hernández Gómez
+---
+
 ## Entregables (según el classroom)
 - `snake/snake.brik`  
 - `tetris/tetris.brik`  
