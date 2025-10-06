@@ -1,6 +1,5 @@
 # Proyecto — DSL `.brik` + Analizador (Lexer/Parser)
 
----
 ## Integrantes:
 - Maria José Laverde Mahecha
 - José David Melo Contreras
