@@ -147,7 +147,7 @@ python3 analizador.py ./tetris/tetris.brik --pretty
 - [ ] `snake/snake.brik` (válido con el DSL)
 - [ ] `tetris/tetris.brik` (válido con el DSL)
 - [ ] `analizador.py` (un solo archivo — lexer + parser)
-- [ ] `snake/arbol.ast` generado
+- [ ] `snake/arbol.ast` generado (La idea es que ambos árboles sintácticos sean generados por el profe/monitor a cargo de la revisión del trabajo, ya que justamente es el sentido de la entrega, que funcione)
 - [ ] `tetris/arbol.ast` generado
 
 ---
