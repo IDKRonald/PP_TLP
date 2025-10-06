@@ -1,0 +1,119 @@
+/* Archivo de sintaxis y requerimientos para el juego de Tetris
+Desarrollado por MelMaRo
+Formato unificado .brik
+*/
+
+// --------- PARAMETROS GENERALES ---------
+
+parametros_generales {
+    mi_juego = "Tetris Without Budget",
+    version = "1.0.0",
+    tablero = [10, 20],     // ancho x alto en celdas
+    celda = 16              // tamaño de celda en pixeles
+}
+
+// --------- REGLAS DEL JUEGO ---------
+
+reglas {
+    tick_base = 1,          // segundos por tick (velocidad base)
+    incremento_velocidad = 0.1,
+    lineas_por_nivel = 10,
+    vista_previa = 1,       // cantidad de piezas mostradas
+    hard_drop = true,
+    ghost_piece = true
+}
+
+// --------- PUNTAJE ---------
+
+puntaje {
+    score_por_linea = 100,
+    combo_bonus = 50,
+    tetris_bonus = 800
+}
+
+// --------- PIEZAS ---------
+// Cada pieza se define por su color y su forma como matriz (0 = vacío, 1 = bloque)
+
+piezas {
+    I {
+        color = "cyan",
+        matriz = [
+            [1, 1, 1, 1]
+        ]
+    },
+    O {
+        color = "amarillo",
+        matriz = [
+            [1, 1],
+            [1, 1]
+        ]
+    },
+    T {
+        color = "morado",
+        matriz = [
+            [1, 1, 1],
+            [0, 1, 0]
+        ]
+    },
+    S {
+        color = "verde",
+        matriz = [
+            [0, 1, 1],
+            [1, 1, 0]
+        ]
+    },
+    Z {
+        color = "rojo",
+        matriz = [
+            [1, 1, 0],
+            [0, 1, 1]
+        ]
+    },
+    J {
+        color = "azul",
+        matriz = [
+            [1, 0, 0],
+            [1, 1, 1]
+        ]
+    },
+    L {
+        color = "naranja",
+        matriz = [
+            [0, 0, 1],
+            [1, 1, 1]
+        ]
+    }
+}
+
+// --------- EVENTOS ---------
+
+eventos {
+    linea_completa -> sumar_puntaje,
+    tetris_completo -> sumar_puntaje_tetris,
+    tope_superior -> fin_de_partida
+}
+
+// --------- FIN DE JUEGO ---------
+
+fin_de_juego {
+    condicion = "tope_superior"
+}
+
+// --------- CONTROLES ---------
+
+controles {
+    movimiento {
+        izquierda = "A",
+        derecha = "D",
+        bajar = "S"
+    },
+    rotacion {
+        horario = "K",
+        antihorario = "J"
+    },
+    acciones {
+        soltar = "Espacio",
+        pausar = "P",
+        reiniciar = "R"
+    }
+}
