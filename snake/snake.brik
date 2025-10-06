@@ -1,0 +1,87 @@
+/* Archivo de sintaxis y requerimientos para el juego de Snake
+Desarrollado por Maria Jose Laverde Mahecha, Ronald Sneyder Hernández Gomez, Jose David Melo Contreras */
+
+
+// --------- PARAMETROS GENERALES --------- 
+
+parametros_generales {
+    mi_juego = "Snake 1",
+    cuadricula = [50, 50]   // ancho x largo en celdas
+}
+
+
+// --------- REGLAS DEL JUEGO --------- 
+
+reglas {
+    vidas_iniciales = 3,
+    score_inicial = 0
+}
+
+snake {
+    dimensiones = [1, 3], // ancho x largo
+    velocidad_inicial = 2, // cuadros por segundo
+    aumento_velocidad = 1, // cada que come una manzana
+    color = "verde"
+}
+
+manzanas {
+    manzana {
+        duracion = 3, // segundos en tablero
+        dimensiones = [1, 1],
+        color = "rojo",
+        forma = "cuadro",
+        score = 15
+    },
+
+    manzana_dorada {
+        color = "dorado",
+        forma = "cuadro",
+        score = 30,
+        efecto = "score_x2",
+        duracion = 5, // Del efecto y en el tablero, segundos
+        probabilidad = 0.01 // 1%
+    },
+
+    manzana_envenenada {
+        color = "verde",
+        forma = "cuadro",
+        score = -30,
+        efecto = "velocidad_x2",
+        duracion = 5, // Del efecto y en el tablero, segundos
+        probabilidad = 0.02 // 2%
+    },
+
+    manzana_de_vida {
+        color = "rosa",
+        forma = "circulo",
+        efecto = "aumentar_vida",
+        valor = 1, // Suma una vida
+        duracion = 2, // segundos en tablero
+        probabilidad = 0.005 // 0.5%
+    }
+}
+
+eventos {
+    colision -> perder_vida,
+    fuera_del_tablero -> perder_vida
+}
+
+fin_de_juego {
+    condicion = "vidas = 0"
+}
+
+
+// --------- CONTROLES --------- 
+
+controles {
+    movimiento {
+        derecha = "D",
+        izquierda = "A",
+        arriba = "W"
+    }
+
+    interfaz {
+        pausar = "S",
+        reiniciar = "Q"
+    }
+}
