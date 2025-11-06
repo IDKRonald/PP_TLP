@@ -1,163 +1,177 @@
-# Proyecto — DSL `.brik` + Analizador (Lexer/Parser)
+# 🧩 Proyecto PP_TLP — DSL `.brik` + Motor de Juego
 
-## Integrantes:
-- Maria José Laverde Mahecha
-- José David Melo Contreras
-- Ronald Sneyder Hernández Gómez
-
-## Entregables (según el classroom)
-- `snake/snake.brik`  
-- `tetris/tetris.brik`  
-- **Un solo archivo** de analizador: `analizador.py` (Python)  
-- El analizador debe **tokenizar** y **generar el árbol sintáctico** y guardarlo como **`arbol.ast`** (JSON)
+## 📚 Integrantes
+- **María José Laverde Mahecha**
+- **José David Melo Contreras**
+- **Ronald Sneyder Hernández Gómez**
 
 ---
 
-## Estructura recomendada
+## 🧱 Descripción General
+Este proyecto corresponde a la **Entrega 2** del trabajo práctico de la asignatura *Teoría de Lenguajes de Programación*.  
+Amplía la Entrega 1, donde se desarrolló el **analizador léxico y sintáctico** para el lenguaje **DSL `.brik`**, incorporando ahora un **motor de ejecución completo** para juegos definidos con dicho DSL, utilizando **Python 3 y Pygame**.
+
+El sistema permite definir configuraciones de juegos (como *Snake* y *Tetris*) mediante archivos `.brik`, analizarlos para generar su **árbol sintáctico abstracto (`arbol.ast`)**, e interpretarlos dinámicamente con el motor gráfico y de control.
+
+---
+
+## 📁 Estructura del Proyecto
 ```
 PP_TLP/
 ├─ analizador.py
+├─ script_init.txt
+├─ motor/
+│  ├─ __init__.py
+│  ├─ entrada.py
+│  ├─ graficos.py
+│  ├─ interprete.py
+│  └─ nucleo.py
 ├─ snake/
-│  └─ snake.brik
+│  ├─ snake.brik
+│  ├─ arbol.ast
+│  └─ ejecutar_snake.py
 └─ tetris/
-   └─ tetris.brik
+   ├─ tetris.brik
+   ├─ arbol.ast
+   └─ ejecutar_tetris.py
 ```
-> Así cada `arbol.ast` se genera **junto** a su `.brik` y no se sobreescriben entre sí.
+> La carpeta `.venv/` no se incluye en la entrega (solo para entorno local).
 
 ---
 
-## Requisitos
-- Python 3.8+  
-- `analizador.py` en la raíz del proyecto (como en el árbol anterior)
-
----
-
-## Cómo generar el AST (`arbol.ast`) [MUY IMPORTANTE]
-#### Las instrucciones de ejecución para generar el AST son importantes en este caso, ya que quedaron algo diferentes respecto al archivo de ejemplo del profe
-
-
-### Snake
-**Windows (PowerShell)**
-```powershell
-cd PP_TLP
-py .\analizador.py .\snake\snake.brik --pretty
-```
-
-**macOS / Linux**
-```bash
-cd PP_TLP
-python3 analizador.py ./snake/snake.brik --pretty
-```
-
-➡️ Se crea **`snake/arbol.ast`** (JSON).  
-`--pretty` es opcional (solo afecta la impresión en pantalla, el archivo siempre se escribe indentado).
-
-### Tetris
-**Windows (PowerShell)**
-```powershell
-cd PP_TLP
-py .\analizador.py .\tetris\tetris.brik --pretty
-```
-
-**macOS / Linux**
-```bash
-cd PP_TLP
-python3 analizador.py ./tetris/tetris.brik --pretty
-```
-
-➡️ Se crea **`tetris/arbol.ast`**.
-
-> Si ejecutas varias veces sobre el mismo `.brik`, **se sobrescribe** su `arbol.ast` (comportamiento esperado).
-
----
-
-## Especificación breve del DSL `.brik`
-
-### Comentarios
-- Línea: `// comentario`
-- Bloque: `/* comentario ... */`
-
-### Parámetros
-- **Simples:** `nombre = valor`
-- **Compuestos (bloque):**
-  ```brik
-  nombre {
-      atributo1 = valor1,
-      atributo2 = valor2
-      // subbloques y mapeos permitidos
-  }
-  ```
-- **Listas:** `lista = [x1, x2, x3]` (admite listas anidadas)
-
-### Tipos soportados
-- `STRING`: `"texto"` (con escapes `\" \\ \n`)
-- `NUMBER`: `123`, `3.14`, **`-30`** (negativos admitidos)
-- `BOOL`: `true`, `false`
-- `LIST`: `[ ... ]`
-- `BLOCK`: `{ ... }`
-
-### Mapeos de eventos
-- Sintaxis: `evento -> accion`
-- Se guardan en el AST bajo la clave `"_mappings"` del bloque:
-  ```json
-  "_mappings": [
-    { "from": "colision", "to": "perder_vida" }
-  ]
+## ⚙️ Requisitos
+- **Python 3.8 o superior**
+- **Pygame**
+  ```bash
+  pip install pygame
   ```
 
-### Separadores dentro de bloques
-- **Coma opcional** entre entradas.
-- También se admite **separador implícito** por nueva línea (otra entrada `IDENT` sin coma).
+---
+
+## 🚀 Instrucciones de Uso
+
+### 1️⃣ Generar los AST
+```bash
+cd PP_TLP
+python analizador.py snake/snake.brik --pretty
+python analizador.py tetris/tetris.brik --pretty
+```
+
+### 2️⃣ Ejecutar los Juegos
+
+#### 🐍 Snake
+```bash
+python snake/ejecutar_snake.py
+```
+
+#### 🧱 Tetris
+```bash
+python tetris/ejecutar_tetris.py
+```
 
 ---
 
-## Qué hace el analizador (`analizador.py`)
+## 🧠 Arquitectura del Sistema
 
-### Lexer (Tokenizador)
-- Reconoce: `{ } [ ] , = ->`
-- Ignora comentarios `//` y `/* ... */`
-- Tokeniza: strings, números (incluye negativos), booleanos, identificadores
-
-### Parser (Árbol sintáctico)
-- Top-level: `ident = valor` **o** `ident { ... }`
-- Dentro de bloques:
-  - Asignación: `ident = valor`
-  - **Sub-bloques:** `ident { ... }`
-  - **Mapeos:** `ident -> ident | "string"`
-- Salida: **JSON**  
-  - El AST se guarda **siempre** como `arbol.ast` en la **misma carpeta** del `.brik` analizado.
-
-### Errores (ejemplos)
-- Mensajes con **línea y columna** para depurar rápido:
-  - Comillas sin cerrar
-  - Llaves o corchetes desbalanceados
-  - Token inesperado dentro de un bloque
+### 🔸 1. `analizador.py` — Lexer + Parser
+Genera un **AST en formato JSON** desde un archivo `.brik`.  
+Características principales:
+- Reconocimiento de tokens (`STRING`, `NUMBER`, `BOOL`, `IDENT`, `LIST`, `BLOCK`, `ARROW`)
+- Soporte para **comentarios de línea y bloque**
+- Manejo de **errores con línea y columna**
+- Generación automática del archivo `arbol.ast` junto al `.brik`
+- Argumento `--pretty` para impresión legible
 
 ---
 
-## Notas por juego
+### 🔸 2. `motor/` — Motor de Ejecución
 
-### `snake.brik`
-- Secciones típicas: `parametros_generales`, `reglas`, `snake`, `manzanas`, `eventos`, `fin_de_juego`, `controles`
-- Ítems de `manzanas` como **sub-bloques** dentro de `manzanas { ... }`
-- `eventos` usa mapeos: `colision -> perder_vida`
+#### 🧩 `nucleo.py`
+Implementa el **game loop principal** (`Motor`):
+- Ventana 640×520
+- Ciclo: **eventos → actualización → renderizado**
+- Control de FPS y pausa
+- Callbacks personalizables por juego (`inicializar`, `actualizar`, `renderizar`)
 
-### `tetris.brik`
-- `piezas` definidas con **matrices 0/1** (solo forma base; las **rotaciones** las hace el motor)
-- Secciones análogas: `parametros_generales`, `reglas`, `puntaje`, `piezas`, `eventos`, `fin_de_juego`, `controles`
+#### 🧠 `interprete.py`
+Traduce el contenido del `arbol.ast` al motor:
+- Acceso simplificado a bloques del DSL (`parametros_generales`, `reglas`, `controles`, `piezas`, `manzanas`, etc.)
+- Métodos específicos para cada juego (`obtener_config_snake()`, `obtener_piezas_tetris()`, `obtener_puntaje_config()`)
+
+#### 🎮 `entrada.py`
+Gestiona entradas del jugador mediante Pygame:
+- Mapeo de teclas a acciones del DSL
+- Detección de teclas presionadas y recién presionadas
+- Sistema de callbacks (`registrar_accion`, `ejecutar_acciones`)
+
+#### 🖼️ `graficos.py`
+Contiene todas las funciones gráficas:
+- `dibujar_ladrillo()`, `dibujar_texto()`, `dibujar_cuadricula()`
+- Paleta de colores estándar (rojo, verde, dorado, gris, etc.)
+- Renderizado con opacidad, figuras y texto con fuentes escaladas
+
+#### 🧾 `__init__.py`
+Integra los módulos del motor bajo un único espacio de nombres.
 
 ---
 
-## Checklist (para entrega)
-- [ ] `snake/snake.brik` (válido con el DSL)
-- [ ] `tetris/tetris.brik` (válido con el DSL)
-- [ ] `analizador.py` (un solo archivo — lexer + parser)
-- [ ] `snake/arbol.ast` generado (La idea es que ambos árboles sintácticos sean generados por el profe/monitor a cargo de la revisión del trabajo, ya que justamente es el sentido de la entrega, que funcione)
-- [ ] `tetris/arbol.ast` generado
+### 🔸 3. `snake/` — Implementación del Juego *Snake*
+Archivo: `ejecutar_snake.py`
+
+**Características:**
+- Lógica completa del juego (movimiento, colisiones, efectos, vidas)
+- Sistema de **manzanas múltiples**:
+  - 🍎 Normal  
+  - ⭐ Dorada (Score × 2 temporal)  
+  - ☠️ Envenenada (pérdida de score, velocidad × 2)  
+  - 💖 De vida (recupera vidas)
+- Efectos temporales gestionados por clase `Efecto`
+- Dibujo dinámico del tablero, UI y mensajes de Game Over
+- Controles mapeados desde el DSL (`WASD`, `P`, `Q`, `ESC`)
 
 ---
 
-## Tips
-- Usa identificadores en minúsculas con guion_bajo.
-- Evita coma **final** cuando no la necesites (el analizador la tolera, pero mejor limpio).
-- Si ves un error, revisa **justo** la línea y columna que señala el analizador.
+### 🔸 4. `tetris/` — Implementación del Juego *Tetris*
+Archivo: `ejecutar_tetris.py`
+
+**Características:**
+- Lógica del tablero, piezas, rotaciones, colisiones y líneas completas
+- Sistema de puntaje configurable desde el AST:
+  - Score por línea  
+  - Bonus por Tetris (4 líneas)  
+  - Incremento de nivel y velocidad
+- Soporte de **pieza fantasma (ghost piece)** y **vista previa**
+- Mapeo de controles (`A/D/S/J/K/Espacio/R`)
+- Interfaz lateral con estadísticas y próxima pieza
+
+---
+
+## 🧩 Relación con la Entrega 1
+
+| Componente | Entrega 1 | Entrega 2 |
+|-------------|------------|-----------|
+| Lexer + Parser (`analizador.py`) | ✔️ Completo | ✔️ Optimizado y documentado |
+| AST (`arbol.ast`) | ✔️ Generado | ✔️ Utilizado por motor |
+| Motor de juego (`motor/*`) | — | ✔️ Implementado |
+| Interprete de AST | — | ✔️ Implementado |
+| Ejemplos `.brik` (Snake, Tetris) | ✔️ | ✔️ Extendidos y funcionales |
+| Renderizado y controles | — | ✔️ Integrados con Pygame |
+
+---
+
+## 🧾 Checklist Final
+- [x] Lexer y parser funcionales (`analizador.py`)
+- [x] AST JSON generado correctamente (`arbol.ast`)
+- [x] Motor de juego (`motor/`) completo y modular
+- [x] Juegos **Snake** y **Tetris** ejecutables
+- [x] Manejo de entrada y gráficos con Pygame
+- [x] Integración del DSL con motor mediante AST
+- [x] Documentación actualizada (`README.md`)
+
+---
+
+## 🧠 Créditos
+Desarrollado por los estudiantes de Ingeniería —  
+**Universidad Nacional de Colombia**  
+Proyecto de curso: *Teoría de Lenguajes de Programación (2025-02)*  
+Profesor: *[Nombre del docente, si aplica]*  
