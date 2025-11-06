@@ -1,0 +1,160 @@
+{
+  "parametros_generales": {
+    "mi_juego": "Tetris Without Budget",
+    "version": "1.0.0",
+    "tablero": [
+      10,
+      20
+    ],
+    "celda": 16
+  },
+  "reglas": {
+    "tick_base": 1,
+    "incremento_velocidad": 0.1,
+    "lineas_por_nivel": 10,
+    "vista_previa": 1,
+    "hard_drop": true,
+    "ghost_piece": true
+  },
+  "puntaje": {
+    "score_por_linea": 100,
+    "combo_bonus": 50,
+    "tetris_bonus": 800
+  },
+  "piezas": {
+    "I": {
+      "color": "cyan",
+      "matriz": [
+        [
+          1,
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "O": {
+      "color": "amarillo",
+      "matriz": [
+        [
+          1,
+          1
+        ],
+        [
+          1,
+          1
+        ]
+      ]
+    },
+    "T": {
+      "color": "morado",
+      "matriz": [
+        [
+          1,
+          1,
+          1
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ]
+    },
+    "S": {
+      "color": "verde",
+      "matriz": [
+        [
+          0,
+          1,
+          1
+        ],
+        [
+          1,
+          1,
+          0
+        ]
+      ]
+    },
+    "Z": {
+      "color": "rojo",
+      "matriz": [
+        [
+          1,
+          1,
+          0
+        ],
+        [
+          0,
+          1,
+          1
+        ]
+      ]
+    },
+    "J": {
+      "color": "azul",
+      "matriz": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ]
+    },
+    "L": {
+      "color": "naranja",
+      "matriz": [
+        [
+          0,
+          0,
+          1
+        ],
+        [
+          1,
+          1,
+          1
+        ]
+      ]
+    }
+  },
+  "eventos": {
+    "_mappings": [
+      {
+        "from": "linea_completa",
+        "to": "sumar_puntaje"
+      },
+      {
+        "from": "tetris_completo",
+        "to": "sumar_puntaje_tetris"
+      },
+      {
+        "from": "tope_superior",
+        "to": "fin_de_partida"
+      }
+    ]
+  },
+  "fin_de_juego": {
+    "condicion": "tope_superior"
+  },
+  "controles": {
+    "movimiento": {
+      "izquierda": "A",
+      "derecha": "D",
+      "bajar": "S"
+    },
+    "rotacion": {
+      "horario": "K",
+      "antihorario": "J"
+    },
+    "acciones": {
+      "soltar": "Espacio",
+      "pausar": "P",
+      "reiniciar": "R"
+    }
+  }
+}

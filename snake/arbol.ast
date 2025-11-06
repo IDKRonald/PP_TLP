@@ -1,0 +1,85 @@
+{
+  "parametros_generales": {
+    "mi_juego": "Snake 1",
+    "cuadricula": [
+      50,
+      50
+    ]
+  },
+  "reglas": {
+    "vidas_iniciales": 3,
+    "score_inicial": 0
+  },
+  "snake": {
+    "dimensiones": [
+      1,
+      3
+    ],
+    "velocidad_inicial": 3,
+    "aumento_velocidad": 1,
+    "color": "verde"
+  },
+  "manzanas": {
+    "manzana": {
+      "duracion": 3,
+      "dimensiones": [
+        1,
+        1
+      ],
+      "color": "rojo",
+      "forma": "cuadro",
+      "score": 15
+    },
+    "manzana_dorada": {
+      "color": "dorado",
+      "forma": "cuadro",
+      "score": 30,
+      "efecto": "score_x2",
+      "duracion": 5,
+      "probabilidad": 0.1
+    },
+    "manzana_envenenada": {
+      "color": "verde",
+      "forma": "cuadro",
+      "score": -30,
+      "efecto": "velocidad_x2",
+      "duracion": 5,
+      "probabilidad": 0.08
+    },
+    "manzana_de_vida": {
+      "color": "rosa",
+      "forma": "circulo",
+      "efecto": "aumentar_vida",
+      "valor": 1,
+      "duracion": 2,
+      "probabilidad": 0.04
+    }
+  },
+  "eventos": {
+    "_mappings": [
+      {
+        "from": "colision",
+        "to": "perder_vida"
+      },
+      {
+        "from": "fuera_del_tablero",
+        "to": "perder_vida"
+      }
+    ]
+  },
+  "fin_de_juego": {
+    "condicion": "vidas = 0"
+  },
+  "controles": {
+    "movimiento": {
+      "derecha": "D",
+      "izquierda": "A",
+      "arriba": "W",
+      "bajar": "S"
+    },
+    "interfaz": {
+      "pausar": "P",
+      "reiniciar": "Q"
+    }
+  }
+}

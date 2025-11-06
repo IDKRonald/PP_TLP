@@ -1,0 +1,41 @@
+# 1. Instalar pygame
+pip install pygame
+
+# 2. Generar los AST (si no existen)
+cd PP_TLP
+python analizador.py snake/snake.brik
+python analizador.py tetris/tetris.brik
+
+# 3. Ejecutar Snake
+python snake/ejecutar_snake.py
+
+# 4. Ejecutar Tetris (en otra terminal)
+python tetris/ejecutar_tetris.py
+```
+
+---
+
+## 🎓 **Qué cumple la Entrega 2:**
+
+| Requisito | Ubicación | Estado |
+|-----------|-----------|--------|
+| Ventana 640x480 | `motor/nucleo.py:14-15` | ✅ |
+| Game loop | `motor/nucleo.py:90-120` | ✅ |
+| `dibujar_ladrillo()` | `motor/graficos.py:41-60` | ✅ |
+| `dibujar_texto()` | `motor/graficos.py:62-74` | ✅ |
+| Control de entradas | `motor/entrada.py` completo | ✅ |
+| Motor agnóstico | Arquitectura de callbacks | ✅ |
+
+---
+
+## 🔗 **Cómo se conecta con tu Entrega 1:**
+```
+analizador.py (Entrega 1)
+    ↓ genera
+arbol.ast (JSON)
+    ↓ lee
+motor/interprete.py (Entrega 2)
+    ↓ configura
+motor/nucleo.py → motor/graficos.py → motor/entrada.py
+    ↓ ejecuta
+ejecutar_snake.py / ejecutar_tetris.py
