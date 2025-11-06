@@ -38,17 +38,17 @@ manzanas {
         forma = "cuadro",
         score = 30,
         efecto = "score_x2",
-        duracion = 5, // Del efecto y en el tablero, segundos
-        probabilidad = 0.10 // 10%
+        duracion = 5, // Del efecto en segundos
+        probabilidad = 0.15 // 15%
     },
 
     manzana_envenenada {
-        color = "verde",
+        color = "morado",
         forma = "cuadro",
         score = -30,
         efecto = "velocidad_x2",
-        duracion = 5, // Del efecto y en el tablero, segundos
-        probabilidad = 0.08 // 8%
+        duracion = 5, // Del efecto en segundos
+        probabilidad = 0.5 // 5%
     },
 
     manzana_de_vida {
@@ -56,8 +56,7 @@ manzanas {
         forma = "circulo",
         efecto = "aumentar_vida",
         valor = 1, // Suma una vida
-        duracion = 2, // segundos en tablero
-        probabilidad = 0.04 // 4%
+        probabilidad = 0.5 // 5%
     }
 }
 
@@ -77,8 +76,8 @@ controles {
     movimiento {
         derecha = "D",
         izquierda = "A",
-        arriba = "W",
-        bajar = "S"
+        arriba = "W"
+        abajo = "S"
     }
 
     interfaz {
