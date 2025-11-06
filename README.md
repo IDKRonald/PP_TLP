@@ -169,9 +169,3 @@ Archivo: `ejecutar_tetris.py`
 - [x] Documentación actualizada (`README.md`)
 
 ---
-
-## 🧠 Créditos
-Desarrollado por los estudiantes de Ingeniería —  
-**Universidad Nacional de Colombia**  
-Proyecto de curso: *Teoría de Lenguajes de Programación (2025-02)*  
-Profesor: *[Nombre del docente, si aplica]*  
