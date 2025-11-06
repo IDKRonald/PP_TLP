@@ -167,5 +167,3 @@ Archivo: `ejecutar_tetris.py`
 - [x] Manejo de entrada y gráficos con Pygame
 - [x] Integración del DSL con motor mediante AST
 - [x] Documentación actualizada (`README.md`)
-
----
